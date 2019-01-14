@@ -20,9 +20,21 @@ function renderButtons() {
       // Adding the button to the buttons-view div
       $("#buttons-view").append(a);
     }
-}
+};
 
-function displayShowInfo() {
+$("#add-show").on("click", function(event) {
+  event.preventDefault();
+  // This line grabs the input from the textbox
+  var show = $("#show-input").val().trim();
+
+  // Adding movie from the textbox to our array
+  shows.push(show);
+
+  // Calling renderButtons which handles the processing of our movie array
+  renderButtons();
+});
+
+function displayGifs () {
     // In this case, the "this" keyword refers to the button that was clicked
     var show = $(this).attr("data-name");
 
@@ -44,7 +56,7 @@ function displayShowInfo() {
         for (var i = 0; i < results.length; i++) {
 
           // Only taking action if the photo has an appropriate rating
-          if (results[i].rating !== "r" && results[i].rating !== "pg-13") {
+          if (results[i].rating !== "r" && results[i].rating !== "pg-13"){
             // Creating a div for the gif
             var gifDiv = $("<div>");
 
@@ -72,19 +84,18 @@ function displayShowInfo() {
       });
   };
 
-  $("#add-show").on("click", function(event) {
-    event.preventDefault();
-    // This line grabs the input from the textbox
-    var show = $("#show-input").val().trim();
+// function for animating gifs
+$(document).on('click', '.div', function(){
+	var state = $(this).attr('data-state');
+		if ( state == 'still'){
+                $(this).attr('src', $(this).data('animate'));
+                $(this).attr('data-state', 'animate');
+            }else{
+                $(this).attr('src', $(this).data('still'));
+                $(this).attr('data-state', 'still');
+            };
+});
 
-    // Adding movie from the textbox to our array
-    shows.push(show);
+$(document).on("click", ".show-btn", displayGifs);
 
-    // Calling renderButtons which handles the processing of our movie array
-    renderButtons();
-  });
-
-  $(document).on("click", "show-btn", displayShowInfo);
-
-  renderButtons();
-
+renderButtons();

@@ -22,7 +22,7 @@ function renderButtons() {
     }
 }
 
-$("button").on("click", function() {
+function displayShowInfo() {
     // In this case, the "this" keyword refers to the button that was clicked
     var show = $(this).attr("data-name");
 
@@ -70,5 +70,21 @@ $("button").on("click", function() {
           }
         }
       });
+  };
+
+  $("#add-show").on("click", function(event) {
+    event.preventDefault();
+    // This line grabs the input from the textbox
+    var show = $("#show-input").val().trim();
+
+    // Adding movie from the textbox to our array
+    shows.push(show);
+
+    // Calling renderButtons which handles the processing of our movie array
+    renderButtons();
   });
+
+  $(document).on("click", "show-btn", displayShowInfo);
+
+  renderButtons();
 

@@ -23,14 +23,14 @@ function renderButtons() {
 };
 
 $("#add-show").on("click", function() {
- 
+  event.preventDefault();
   // This line grabs the input from the textbox
   var show = $("#show-input").val().trim();
 
-  // Adding movie from the textbox to our array
+  // Adding show from the textbox to our array
   shows.push(show);
 
-  // Calling renderButtons which handles the processing of our movie array
+  // Calling renderButtons which handles the processing of our show array
   renderButtons();
 });
 
@@ -39,7 +39,7 @@ function displayGifs () {
     // In this case, the "this" keyword refers to the button that was clicked
     var show = $(this).attr("data-name");
 
-    // Constructing a URL to search Giphy for the name of the person who said the quote
+    // Constructing a URL to search Giphy for the name of the show
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
       show + "&api_key=dc6zaTOxFJmzC&limit=10";
 
@@ -69,20 +69,17 @@ function displayGifs () {
 
             // Creating an image tag
             var showImage = $("<img>");
-            showImage.attr('src', results[i].images.fixed_height_still.url);
-            // shows the rating on hover
-            showImage.attr('title', "Rating: " + results[i].rating);
-            showImage.attr('data-still', results[i].images.fixed_height_still.url);
-            showImage.attr('data-state', 'still');
-            showImage.addClass('gif');
-            showImage.attr('data-animate', results[i].images.fixed_height.url);
-  
 
             // Giving the image tag an src attribute of a proprty pulled off the
             // result item
-           
+            showImage.attr("src", results[i].images.fixed_height_still.url);
+            showImage.attr("title", "Rating: " + results[i].rating);
+            showImage.attr("data-still", results[i].images.fixed_height_still.url);
+            showImage.attr("data-state", "still");
+            showImage.addClass("gif");
+            showImage.attr("data-animate", results[i].images.fixed_height.url);
 
-            // Appending the paragraph and personImage we created to the "gifDiv" div we created
+            // Appending the paragraph and showImage we created to the "gifDiv" div we created
             gifDiv.append(p);
             gifDiv.append(showImage);
 
@@ -93,16 +90,16 @@ function displayGifs () {
       });
   };
 
-// function for animating gifs
-$(document).on('click', '.gif', function(){
-	var state = $(this).attr('data-state');
-		if ( state == 'still'){
-                $(this).attr('src', $(this).data('animate'));
-                $(this).attr('data-state', 'animate');
-            }else{
-                $(this).attr('src', $(this).data('still'));
-                $(this).attr('data-state', 'still');
-            };
+// function to animate gifs
+$(document).on("click", ".gif", function() {
+  var state = $(this).attr("data-state");
+  if (state === "still") {
+    $(this).attr("src", $(this).data("animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).data("still"));
+    $(this).attr("data-state", "still");
+  };
 });
 
 $(document).on("click", ".show-btn", displayGifs);

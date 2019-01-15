@@ -1,0 +1,12 @@
+body {
+    background-color: lightblue;
+  }
+
+  .show-btn {
+      background-color: darkblue;
+      color: white;
+      padding: 10px 24px;
+      font-size: 12px;
+      border-radius: 12px;
+      cursor: pointer;
+  }
